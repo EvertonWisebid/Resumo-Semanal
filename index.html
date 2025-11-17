@@ -3,271 +3,86 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dashboard BI - Produção de Oportunidades | 10-14/11/2025</title>
+  <title>Dashboard BI - Produção de Oportunidades | 10-17/11/2025</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
   <style>
     :root {
-      --primary: #1e40af;     /* Azul profundo */
-      --secondary: #4338ca;   /* Indigo */
-      --success: #10b981;     /* Verde esmeralda */
-      --danger: #ef4444;      /* Vermelho vivo */
-      --warning: #f59e0b;
-      --gray: #64748b;
-      --light: #f8fafc;
-      --dark: #1e293b;
-      --bg: #0f172a;          /* Fundo escuro elegante */
-      
-      /* Cores do funil */
-      --f1: #34ily #10b981;
-      --f2: #3b82f6;
-      --f3: #fb923c;
-      --f4: #8b5cf6;
-      --f5: #10b981;
+      --primary: #1e40af; --secondary: #4338ca; --success: #10b981; --danger: #ef4444;
+      --gray: #64748b; --light: #f8fafc; --dark: #1e293b; --bg: #0f172a;
+      --f1: #10b981; --f2: #3b82f6; --f3: #fb923c; --f4: #8b5cf6; --f5: #10b981;
     }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html, body { height:100%; font-family:'Inter',sans-serif; color:#e2e8f0; background:var(--bg); overflow:hidden; }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body {
-      height: 100%;
-      font-family: 'Inter', sans-serif;
-      color: #e2e8f0;
-      background: var(--bg);
-      overflow: hidden;
-    }
-
-    /* Fundo Abstrato Animado (Mesh Gradient + Partículas sutis) */
+    /* Fundo animado abstrato */
     body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: 
+      content:''; position:fixed; inset:0;
+      background:
         radial-gradient(circle at 20% 80%, #1e40af33 0%, transparent 50%),
         radial-gradient(circle at 80% 20%, #4338ca33 0%, transparent 50%),
         radial-gradient(circle at 40% 40%, #10b98122 0%, transparent 50%),
         #0f172a;
-      animation: float 20s ease-in-out infinite;
-      z-index: -2;
+      animation:float 20s ease-in-out infinite; z-index:-2;
     }
-
     body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><defs><radialGradient id="g"><stop offset="0%" stop-color="%234338ca" stop-opacity="0.3"/><stop offset="100%" stop-color="%231e40af" stop-opacity="0"/></radialGradient></defs><circle cx="20" cy="20" r="40" fill="url(%23g)"><animate attributeName="cx" values="20;80;20" dur="25s" repeatCount="indefinite"/><animate attributeName="cy" values="20;80;20" dur="18s" repeatCount="indefinite"/></circle><circle cx="80" cy="80" r="30" fill="url(%23g)" opacity="0.5"><animate attributeName="cx" values="80;20;80" dur="22s" repeatCount="indefinite"/><animate attributeName="cy" values="80;20;80" dur="15s" repeatCount="indefinite"/></circle></svg>') 
-      center/cover no-repeat;
-      animation: breathe 30s ease-in-out infinite;
-      z-index: -1;
-      opacity: 0.4;
+      content:''; position:fixed; inset:0; opacity:0.4;
+      background:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><defs><radialGradient id="g"><stop offset="0%" stop-color="%234338ca" stop-opacity="0.3"/><stop offset="100%" stop-color="%231e40af" stop-opacity="0"/></radialGradient></defs><circle cx="20" cy="20" r="40" fill="url(%23g)"><animate attributeName="cx" values="20;80;20" dur="25s" repeatCount="indefinite"/><animate attributeName="cy" values="20;80;20" dur="18s" repeatCount="indefinite"/></circle><circle cx="80" cy="80" r="30" fill="url(%23g)" opacity="0.5"><animate attributeName="cx" values="80;20;80" dur="22s" repeatCount="indefinite"/><animate attributeName="cy" values="80;20;80" dur="15s" repeatCount="indefinite"/></circle></svg>') center/cover no-repeat;
+      animation:breathe 30s ease-in-out infinite; z-index:-1;
     }
-
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0) rotate(0deg); }
-      50% { transform: translate(30px, -30px) rotate(2deg); }
-    }
-    @keyframes breathe {
-      0%, 100% { opacity: 0.3; transform: scale(1); }
-      50% { opacity: 0.6; transform: scale(1.1); }
-    }
+    @keyframes float { 0%,100%{transform:translate(0,0) rotate(0deg)} 50%{transform:translate(30px,-30px) rotate(2deg)} }
+    @keyframes breathe { 0%,100%{opacity:0.3;transform:scale(1)} 50%{opacity:0.6;transform:scale(1.1)} }
 
     .container {
-      width: 96vw;
-      height: 96vh;
-      max-width: 1840px;
-      margin: 2vh auto;
-      background: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(20px);
-      border-radius: 24px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
+      width:96vw; height:96vh; max-width:1840px; margin:2vh auto;
+      background:rgba(15,23,42,0.85); backdrop-filter:blur(20px);
+      border-radius:24px; box-shadow:0 20px 60px rgba(0,0,0,0.6);
+      border:1px solid rgba(255,255,255,0.1); overflow:hidden;
+      display:flex; flex-direction:column;
     }
-
     header {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      padding: 32px 40px;
-      text5 text-align: center;
-      color: white;
+      background:linear-gradient(135deg,var(--primary),var(--secondary));
+      padding:36px 40px; text-align:center; color:white;
     }
-    header h1 {
-      font-size: 3.2rem;
-      font-weight: 800;
-      letter-spacing: -0.5px;
-    }
-    header p {
-      font-size: 1.3rem;
-      opacity: 0.9;
-      margin-top: 8px;
-    }
+    header h1 { font-size:3.4rem; font-weight:800; letter-spacing:-1px; }
+    header p { font-size:1.4rem; opacity:0.95; margin-top:8px; }
 
-    .tabs {
-      display: flex;
-      background: rgba(30, 41, 59, 0.6);
-      backdrop-filter: blur(10px);
-    }
-    .tab {
-      flex: 1;
-      padding: 20px;
-      text-align: center;
-      font-weight: 600;
-      font-size: 1.1rem;
-      cursor: pointer;
-      transition: all 0.4s ease;
-      border-bottom: 4px solid transparent;
-    }
-    .tab:hover {
-      background: rgba(255,255,255,0.1);
-    }
-    .tab.active {
-      background: rgba(255,255,255,0.15);
-      color: white;
-      border-bottom-color: #10b981;
-      font-weight: 700;
-    }
+    .tabs { display:flex; background:rgba(30,41,59,0.6); backdrop-filter:blur(10px); }
+    .tab { flex:1; padding:22px; text-align:center; font-weight:600; font-size:1.15rem; cursor:pointer; transition:all .4s; border-bottom:4px solid transparent; }
+    .tab:hover { background:rgba(255,255,255,0.1); }
+    .tab.active { background:rgba(255,255,255,0.15); color:white; border-bottom-color:#10b981; font-weight:700; }
 
-    .tab-content {
-      flex: 1;
-      padding: 40px;
-      overflow-y: auto;
-      display: none;
-      flex-direction: column;
-      gap: 32px;
-    }
-    .tab-content.active { display: flex; }
+    .tab-content { flex:1; padding:40px; overflow-y:auto; display:none; flex-direction:column; gap:32px; }
+    .tab-content.active { display:flex; }
+    .tab-content h2 { font-size:2.6rem; font-weight:700; color:#e0e7ff; border-bottom:3px solid var(--success); padding-bottom:12px; display:inline-block; }
 
-    .tab-content h2 {
-      font-size: 2.4rem;
-      font-weight: 700;
-      color: #e0e7ff;
-      border-bottom: 3px solid #10b981;
-      padding-bottom: 12px;
-      display: inline-block;
-    }
+    .summary { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:24px; }
+    .card { background:rgba(30,41,59,0.7); padding:28px 20px; border-radius:16px; text-align:center; backdrop-filter:blur(10px); border:1px solid rgba(255,255,255,0.1); transition:all .4s; }
+    .card:hover { transform:translateY(-8px); box-shadow:0 20px 40px rgba(0,0,0,0.3); border-color:#10b981; }
+    .card h3 { font-size:1rem; color:#94a3b8; margin-bottom:8px; text-transform:uppercase; letter-spacing:1px; }
+    .card p { font-size:3.4rem; font-weight:800; color:#e0e7ff; }
 
-    .summary {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-    }
-    .card {
-      background: rgba(30, 41, 59, 0.7);
-      padding: 28px 20px;
-      border-radius: 16px;
-      text-align: center;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.1);
-      transition: all 0.4s ease;
-    }
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-      border-color: #10b981;
-    }
-    .card h3 {
-      font-size: 1rem;
-      color: #94a3b8;
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .card p {
-      font-size: 3.2rem;
-      font-weight: 800;
-      color: #e0e7ff;
-    }
+    .chart-container { background:rgba(15,23,42,0.6); padding:24px; border-radius:16px; height:420px; border:1px solid rgba(255,255,255,0.08); }
 
-    .chart-container {
-      background: rgba(15, 23, 42, 0.6);
-      padding: 24px;
-      border-radius: 16px;
-      height: 420px;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
+    table { width:100%; border-collapse:collapse; background:rgba(30,41,59,0.4); border-radius:16px; overflow:hidden; font-size:1.1rem; }
+    th { background:linear-gradient(90deg,var(--primary),var(--secondary)); color:white; padding:18px 16px; font-weight:700; text-transform:uppercase; font-size:0.95rem; letter-spacing:0.5px; }
+    td { padding:16px; text-align:center; border-bottom:1px solid rgba(255,255,255,0.08); }
+    tbody tr:hover { background:rgba(255,255,255,0.08); }
+    .total-row td { background:rgba(16,185,129,0.2); font-weight:700; font-size:1.2rem; color:#ccfbf1; border-top:3px solid var(--success); }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: rgba(30, 41, 59, 0.4);
-      border-radius: 16px;
-      overflow: hidden;
-      font-size: 1.1rem;
-    }
-    th {
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      color: white;
-      padding: 18px 16px;
-      font-weight: 700;
-      text-transform: uppercase;
-      font-size: 0.95rem;
-      letter-spacing: 0.5px;
-    }
-    td {
-      padding: 16px;
-      text-align: center;
-      border-bottom: 1px solid rgba(255,255,255,0.08);
-    }
-    tbody tr:hover {
-      background: rgba(255,255,255,0.08);
-    }
-    .total-row td {
-      background: rgba(16, 185, 129, 0.2);
-      font-weight: 700;
-      font-size: 1.2rem;
-      color: #ccfbf1;
-      border-top: 3px solid var(--success);
-    }
+    .insight { background:rgba(16,185,129,0.15); padding:24px; border-radius:16px; font-size:1.32rem; line-height:1.6; border-left:6px solid var(--success); backdrop-filter:blur(10px); }
+    .insight strong { color:#10b981; }
 
-    .insight {
-      background: rgba(16, 185, 129, 0.15);
-      padding: 24px;
-      border-radius: 16px;
-      font-size: 1.3rem;
-      line-height: 1.6;
-      border-left: 6px solid var(--success);
-      backdrop-filter: blur(10px);
-    }
-    .insight strong { color: #10b981; }
+    .funnel-chart { display:flex; flex-direction:column; align-items:center; gap:14px; padding:40px; }
+    .funnel-step { width:100%; max-width:900px; height:76px; display:flex; align-items:center; justify-content:space-between; padding:0 40px; color:white; font-weight:700; border-radius:8px; text-shadow:0 2px 4px rgba(0,0,0,0.5); box-shadow:0 12px 24px rgba(0,0,0,0.4); }
+    .funnel-step span:last-child { font-size:2.6rem; font-weight:900; }
+    .funnel-step-1 { background:var(--f1); max-width:900px; }
+    .funnel-step-2 { background:var(--f2); max-width:720px; clip-path:polygon(5% 0%,95% 0%,100% 100%,0% 100%); }
+    .funnel-step-3 { background:var(--f3); max-width:560px; clip-path:polygon(8% 0%,92% 0%,100% 100%,0% 100%); }
+    .funnel-step-4 { background:var(--f4); max-width:420px; clip-path:polygon(10% 0%,90% 0%,100% 100%,0% 100%); }
+    .funnel-step-5 { background:var(--f5); max-width:300px; border-radius:0 0 8px 8px; }
 
-    .funnel-chart {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      padding: 40px;
-    }
-    .funnel-step {
-      width: 100%;
-      max-width: 900px;
-      height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 40px;
-      color: white;
-      font-weight: 700;
-      border-radius: 8px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    }
-    .funnel-step span:last-child {
-      font-size: 2.4rem;
-      font-weight: 900;
-    }
-    .funnel-step-1 { background: var(--f1); max-width: 900px; }
-    .funnel-step-2 { background: var(--f2); max-width: 700px; clip-path: polygon(5% 0%, 95% 0%, 100% 100%, 0% 100%); }
-    .funnel-step-3 { background: var(--f3); max-width: 550px; clip-path: polygon(8% 0%, 92% 0%, 100% 100%, 0% 100%); }
-    .funnel-step-4 { background: var(--f4); max-width: 400px; clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%); }
-    .funnel-step-5 { background: var(--f5); max-width: 300px; border-radius: 0 0 8px 8px; }
-
-    footer {
-      padding: 20px;
-      text-align: center;
-      background: rgba(0,0,0,0.4);
-      color: #94a3b8;
-      font-size: 1rem;
-    }
+    footer { padding:20px; text-align:center; background:rgba(0,0,0,0.4); color:#94a3b8; font-size:1rem; }
   </style>
 </head>
 <body>
@@ -275,7 +90,7 @@
 <div class="container">
   <header>
     <h1>Dashboard de Desempenho</h1>
-    <p>Produção de Oportunidades • 10 a 14 de novembro de 2025</p>
+    <p>Produção de Oportunidades • 10 a 17 de novembro de 2025</p>
   </header>
 
   <div class="tabs">
@@ -286,14 +101,13 @@
     <div class="tab" data-tab="consolidado">Consolidado</div>
   </div>
 
-  <!-- Conteúdo das abas (mantido igual, só com classes atualizadas) -->
   <!-- TARLY -->
   <div id="tarly" class="tab-content active">
     <h2>Tarly De Souza</h2>
     <div class="summary">
       <div class="card"><h3>Total Adicionadas</h3><p>11</p></div>
       <div class="card"><h3>Aprov. M/F</h3><p>6</p></div>
-      <div class="card"><h3>Taxa de Aprovação</h3><p>75,0%</p></div>
+      <div class="card"><h3>Taxa Aprovação</h3><p>75,0%</p></div>
       <div class="card"><h3>Perdas M/F</h3><p style="color:#fca5a5;">2</p></div>
     </div>
     <div class="chart-container"><canvas id="chart-tarly"></canvas></div>
@@ -304,54 +118,148 @@
         <tr><td>11/11</td><td>5</td><td>0</td><td>2</td><td>1</td></tr>
         <tr><td>12/11</td><td>4</td><td>2</td><td>0</td><td>1</td></tr>
         <tr><td>13/11</td><td>2</td><td>2</td><td>0</td><td>0</td></tr>
-        <vi>14/11</td><td>0</td><td>2</td><td>0</td><td>0</td></tr>
+        <tr><td>14/11</td><td>0</td><td>2</td><td>0</td><td>0</td></tr>
+        <tr><td>15-17/11</td><td colspan="4" style="text-align:center;color:#94a3b8;font-style:italic;">Sem dados até o momento</td></tr>
         <tr class="total-row"><td>Total</td><td>11</td><td>6</td><td>2</td><td>2</td></tr>
       </tbody>
     </table>
-    <div class="insight"><strong>Insight:</strong> Líder em prospecção com 11 adicionadas. Conversão de 75% em M/F demonstra alta eficácia na triagem inicial.</div>
+    <div class="insight"><strong>Insight:</strong> Líder absoluto em prospecção. Excelente taxa de conversão (75%). Potencial para superar 15 adicionadas na próxima semana.</div>
   </div>
 
-  <!-- Demais abas (Ailton, Izabele, Carol, Consolidado) permanecem com o mesmo conteúdo, 
-       apenas com o novo estilo aplicado automaticamente pelas classes -->
+  <!-- AILTON -->
+  <div id="ailton" class="tab-content">
+    <h2>Ailton dos Anjos Menezes Neto</h2>
+    <div class="summary">
+      <div class="card"><h3>Total Adicionadas</h3><p>9</p></div>
+      <div class="card"><h3>Aprov. M/F</h3><p>8</p></div>
+      <div class="card"><h3>Taxa Aprovação</h3><p>53,3%</p></div>
+      <div class="card"><h3>Perdas M/F</h3><p style="color:#fca5a5;">7</p></div>
+    </div>
+    <div class="chart-container"><canvas id="chart-ailton"></canvas></div>
+    <table>
+      <thead><tr><th>Data</th><th>Adic.</th><th>Aprov. M/F</th><th>Perdas M/F</th><th>Devolvidas</th></tr></thead>
+      <tbody>
+        <tr><td>10/11</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>11/11</td><td>1</td><td>2</td><td>1</td><td>0</td></tr>
+        <tr><td>12/11</td><td>2</td><td>1</td><td>6</td><td>1</td></tr>
+        <tr><td>13/11</td><td>4</td><td>5</td><td>0</td><td>0</td></tr>
+        <tr><td>14/11</td><td>2</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr class="total-row"><td>Total</td><td>9</td><td>8</td><td>7</td><td>1</td></tr>
+      </tbody>
+    </table>
+    <div class="insight"><strong>Insight:</strong> Alta produtividade. As 7 perdas concentradas em 12/11 já foram superadas com 5 aprovações em 13/11. Foco em filtros = potencial de 70%+ de aprovação.</div>
+  </div>
 
-  <!-- (Coloque aqui as outras abas exatamente como no original) -->
+  <!-- IZABELE -->
+  <div id="izabele" class="tab-content">
+    <h2>Izabele Habeite</h2>
+    <div class="summary">
+      <div class="card"><h3>Aprov. Jurídica</h3><p>14</p></div>
+      <div class="card"><h3>Rep. Jurídica</h3><p>3</p></div>
+      <div class="card"><h3>Taxa de Aprovação</h3><p>82,4%</p></div>
+      <div class="card"><h3>Devolvidas</h3><p>2</p></div>
+    </div>
+    <div class="chart-container"><canvas id="chart-izabele"></canvas></div>
+    <table>
+      <thead><tr><th>Data</th><th>Aprov. Jurídica</th><th>Rep. Jurídica</th><th>Devolvidas</th><th>Canceladas</th></tr></thead>
+      <tbody>
+        <tr><td>10/11</td><td>3</td><td>1</td><td>0</td><td>0</td></tr>
+        <tr><td>11/11</td><td>5</td><td>1</td><td>2</td><td>0</td></tr>
+        <tr><td>12/11</td><td>2</td><td>1</td><td>0</td><td>0</td></tr>
+        <tr><td>13/11</td><td>4</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>14/11</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr class="total-row"><td>Total</td><td>14</td><td>3</td><td>2</td><td>0</td></tr>
+      </tbody>
+    </table>
+    <div class="insight"><strong>Insight:</strong> Excelência na análise jurídica. 14 aprovações com apenas 3 reprovações. Qualidade excepcional do funil recebido.</div>
+  </div>
+
+  <!-- CAROL -->
+  <div id="carol" class="tab-content">
+    <h2>Carol Serra</h2>
+    <div class="summary">
+      <div class="card"><h3>Aprov. Validação</h3><p>11</p></div>
+      <div class="card"><h3>Rep. Validação</h3><p>0</p></div>
+      <div class="card"><h3>Taxa de Aprovação</h3><p>100%</p></div>
+      <div class="card"><h3>Viab. Total</h3><p>11</p></div>
+    </div>
+    <div class="chart-container"><canvas id="chart-carol"></canvas></div>
+    <table>
+      <thead><tr><th>Data</th><th>Aprov. Validação</th><th>Rep. Validação</th><th>Devolvidas</th><th>Canceladas</th><th>Viab. Total</th></tr></thead>
+      <tbody>
+        <tr><td>12/11</td><td>4</td><td>0</td><td>0</td><td>1</td><td>4</td></tr>
+        <tr><td>13/11</td><td>5</td><td>0</td><td>0</td><td>0</td><td>5</td></tr>
+        <tr><td>14/11</td><td>2</td><td>0</td><td>0</td><td>0</td><td>2</td></tr>
+        <tr class="total-row"><td>Total</td><td>11</td><td>0</td><td>0</td><td>1</td><td>11</td></tr>
+      </tbody>
+    </table>
+    <div class="insight"><strong>Insight:</strong> Perfeição operacional: 100% de aprovação nas validações. Etapa final com qualidade máxima.</div>
+  </div>
+
+  <!-- CONSOLIDADO -->
+  <div id="consolidado" class="tab-content">
+    <h2>Funil de Aprovação Coletivo (10-17/11/2025)</h2>
+    <div class="funnel-chart">
+      <div class="funnel-step funnel-step-1"><span>Adicionadas</span><span>20</span></div>
+      <div class="funnel-step funnel-step-2"><span>Aprovadas M/F</span><span>14</span></div>
+      <div class="funnel-step funnel-step-3"><span>Aprovadas Jurídica</span><span>14</span></div>
+      <div class="funnel-step funnel-step-4"><span>Aprovadas Validação</span><span>11</span></div>
+      <div class="funnel-step funnel-step-5"><span>Viabilidade Total</span><span>11</span></div>
+    </div>
+
+    <h2>Resumo Coletivo</h2>
+    <table>
+      <thead><tr><th>Colaborador</th><th>Adic.</th><th>Aprov. M/F</th><th>Aprov. Jurídica</th><th>Aprov. Validação</th><th>Viab. Total</th></tr></thead>
+      <tbody>
+        <tr><td>Ailton dos Anjos</td><td>9</td><td>8</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>Tarly De Souza</td><td>11</td><td>6</td><td>0</td><td>0</td><td>0</td></tr>
+        <tr><td>Izabele Habeite</td><td>0</td><td>0</td><td>14</td><td>0</td><td>0</td></tr>
+        <tr><td>Carol Serra</td><td>0</td><td>0</td><td>0</td><td>11</td><td>11</td></tr>
+        <tr class="total-row"><td>TOTAL COLETIVO</td><td>20</td><td>14</td><td>14</td><td>11</td><td>11</td></tr>
+      </tbody>
+    </table>
+  </div>
 
   <footer>
-    Atualizado em 14/11/2025 • Wisebid ©, Direitos Reservados © 2025
+    Atualizado em 17/11/2025 • Wisebid © 2025 • Dados oficiais
   </footer>
 </div>
 
 <script>
   // Troca de abas
-  document.querySelectorAll('.tab').forEach(tab => {
-    tab.addEventListener('click', () => {
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      tab.classList.add('active');
-      document.getElementById(tab.dataset.tab).classList.add('active');
-    });
-  });
+  document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab,.tab-content').forEach(el=>el.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById(t.dataset.tab).classList.add('active');
+  }));
 
-  // Chart.js com tema escuro
+  // Tema escuro Chart.js
   Chart.defaults.color = '#e2e8f0';
-  Chart.defaults.borderColor = 'rgba(255,255,255,0.1)';
+  Chart.defaults.layout.padding = 10;
 
-  const commonOptions = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: { legend: { position: 'top', labels: { font: { size: 14 } } } },
-    scales: { y: { beginAtZero: true, grid: { color: 'rgba(255,255,255,0.05)' } } }
-  };
+  const labels = ['10/11','11/11','12/11','13/11','14/11'];
+  const opts = { responsive:true, maintainAspectRatio:false, plugins:{legend:{labels:{font:{size:14}}}}};
 
-  const labels = ['10/11', '11/11', '12/11', '13/11', '14/11'];
+  new Chart('chart-tarly', {type:'line', data:{labels, datasets:[
+    {label:'Adicionadas', data:[0,5,4,2,0], borderColor:'#60a5fa', tension:0.4},
+    {label:'Aprov. M/F', data:[0,0,2,2,2], borderColor:'#34d399', tension:0.4},
+    {label:'Perdas M/F', data:[0,2,0,0,0], borderColor:'#f87171', tension:0.4}
+  ]}, options:opts});
 
-  new Chart('chart-tarly', { type: 'line', data: { labels, datasets: [
-    { label: 'Adicionadas', data: [0,5,4,2,0], borderColor: '#60a5fa', backgroundColor: '#60a5fa40', tension: 0.4 },
-    { label: 'Aprov. M/F', data: [0,0,2,2,2], borderColor: '#34d399', backgroundColor: '#34d39940', tension: 0.4 },
-    { label: 'Perdas M/F', data: [0,2,0,0,0], borderColor: '#f87171', backgroundColor: '#f8717140', tension: 0.4 }
-  ]}, options: commonOptions });
+  new Chart('chart-ailton', {type:'line', data:{labels, datasets:[
+    {label:'Adicionadas', data:[0,1,2,4,2], borderColor:'#60a5fa', tension:0.4},
+    {label:'Aprov. M/F', data:[0,2,1,5,0], borderColor:'#34d399', tension:0.4},
+    {label:'Perdas M/F', data:[0,1,6,0,0], borderColor:'#f87171', tension:0.4}
+  ]}, options:opts});
 
-  // Repita para os outros gráficos (ailton, izabele, carol) com as mesmas cores e opções
+  new Chart('chart-izabele', {type:'line', data:{labels, datasets:[
+    {label:'Aprov. Jurídica', data:[3,5,2,4,0], borderColor:'#fb923c', tension:0.4},
+    {label:'Rep. Jurídica', data:[1,1,1,0,0], borderColor:'#f87171', tension:0.4}
+  ]}, options:opts});
+
+  new Chart('chart-carol', {type:'line', data:{labels:['12/11','13/11','14/11'], datasets:[
+    {label:'Aprov. Validação', data:[4,5,2], borderColor:'#8b5cf6', tension:0.4}
+  ]}, options:opts});
 </script>
 </body>
 </html>
