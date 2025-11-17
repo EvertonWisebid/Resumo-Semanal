@@ -1,376 +1,291 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dashboard BI - Wisebid | TV 55"</title>
-  
-  <!-- Fonts grandes e impactantes -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>WISEBID TV DASHBOARD</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
   <style>
-    :root {
-      --primary: #3b82f6;
-      --primary-dark: #1d4ed8;
-      --secondary: #8b5cf6;
-      --success: #10b981;
-      --danger: #ef4444;
-      --bg: #0f172a;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
+    /* RESET TOTAL + BLOQUEIO DE SCROLL */
+    * { margin:0; padding:0; box-sizing:border-box; }
     html, body {
       height: 100%;
       width: 100%;
       overflow: hidden;
       background: #000;
       font-family: 'Inter', sans-serif;
-      color: #f1f5f9;
+      color: white;
     }
 
-    /* Fundo animado poderoso para TV grande */
+    /* Safe zone: usa apenas 90% da tela para evitar corte por overscan */
+    .tv-safe {
+      width: 90vw;
+      height: 90vh;
+      max-width: 90vw;
+      max-height: 90vh;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: grid;
+      grid-template-rows: 14vh 10vh 1fr 8vh;
+      gap: 1.5vh;
+      background: rgba(10, 15, 30, 0.95);
+      border-radius: 3vh;
+      padding: 2vh;
+      box-shadow: 0 0 80px rgba(59, 130, 246, 0.6);
+      border: 2px solid rgba(59, 130, 246, 0.4);
+    }
+
+    /* Fundo animado forte */
     body::before {
       content: '';
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 30%, #1e293b 70%, #312e81 100%);
+      background: linear-gradient(135deg, #1e1b4b, #0f172a 50%, #312e81);
+      background-size: 400% 400%;
+      animation: gradient 20s ease infinite;
       z-index: -2;
     }
+    @keyframes gradient { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
 
-    .bg-glow {
+    .glow {
       position: fixed;
-      width: 800px; height: 800px;
-      background: radial-gradient(circle, rgba(59,130,246,0.4) 0%, transparent 70%);
+      width: 1200px; height: 1200px;
+      background: radial-gradient(circle, rgba(59,130,246,0.4) 0%, transparent 60%);
       top: 50%; left: 50%;
-      transform: translate(-50%, -50%);
-      animation: pulse 15s infinite;
+      transform: translate(-50%,-50%);
+      animation: pulse 12s infinite;
       z-index: -1;
     }
-
-    @keyframes pulse {
-      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
-      50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.9; }
-    }
-
-    /* Container ocupando 100% da TV */
-    .container {
-      width: 100vw;
-      height: 100vh;
-      padding: 2vh 4vw;
-      display: grid;
-      grid-template-rows: auto auto 1fr auto;
-      gap: 2vh;
-      background: rgba(15, 23, 42, 0.5);
-      backdrop-filter: blur(20px);
-    }
+    @keyframes pulse { 0%,100% {transform: translate(-50%,-50%) scale(1)} 50% {transform: translate(-50%,-50%) scale(1.4)} }
 
     header {
       text-align: center;
-      padding: 3vh 0;
-      background: linear-gradient(90deg, var(--primary-dark), var(--secondary));
-      border-radius: 2vw;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      padding: 1vh 0;
     }
-
     header h1 {
       font-family: 'Poppins', sans-serif;
-      font-size: 6vw;
+      font-size: 7vw;
       font-weight: 900;
-      text-shadow: 0 8px 20px rgba(0,0,0,0.6);
-      letter-spacing: 2px;
+      text-shadow: 0 8px 20px rgba(0,0,0,0.8);
+      background: linear-gradient(90deg, #60a5fa, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
+    header p { font-size: 3vw; margin-top: 1vh; opacity: 0.9; }
 
-    header p {
-      font-size: 2.5vw;
-      margin-top: 1vh;
-      opacity: 0.95;
-    }
-
-    /* Abas grandes e destacadas */
     .tabs {
       display: flex;
       justify-content: center;
       gap: 2vw;
-      background: rgba(30, 41, 59, 0.8);
-      padding: 2vh 0;
-      border-radius: 2vw;
-      backdrop-filter: blur(10px);
+      padding: 1vh 0;
     }
-
     .tab {
-      font-size: 2.8vw;
+      font-size: 3.2vw;
       font-weight: 800;
-      padding: 2vh 4vw;
-      border-radius: 1.5vw;
+      padding: 2vh 3vw;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2vw;
       cursor: pointer;
       transition: all 0.4s;
-      background: rgba(255,255,255,0.1);
-      min-width: 18vw;
+      min-width: 15vw;
       text-align: center;
+      backdrop-filter: blur(10px);
     }
-
-    .tab:hover { background: rgba(59,130,246,0.4); }
+    .tab:hover { background: rgba(59,130,246,0.5); }
     .tab.active {
-      background: var(--primary);
-      color: white;
-      transform: scale(1.1);
-      box-shadow: 0 10px 30px rgba(59,130,246,0.6);
+      background: #3b82f6;
+      transform: scale(1.15);
+      box-shadow: 0 10px 40px rgba(59,130,246,0.8);
     }
 
-    /* Área principal */
-    .main-content {
-      display: grid;
+    /* Conteúdo principal */
+    .content {
+      display: none;
       grid-template-columns: 1fr 1fr;
-      gap: 3vw;
-      padding: 2vh 0;
+      gap: 2vw;
+      overflow: hidden;
     }
+    .content.active { display: grid; }
 
-    .left-column, .right-column {
-      display: flex;
-      flex-direction: column;
-      gap: 3vh;
-    }
+    .left, .right { display: flex; flex-direction: column; gap: 2vh; }
 
     h2 {
-      font-family: 'Poppins', sans-serif;
       font-size: 4.5vw;
       text-align: center;
       color: #60a5fa;
-      text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      text-shadow: 0 4px 10px #000;
     }
 
-    /* Cards gigantes */
     .summary {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 2vw;
+      gap: 1.5vw;
     }
-
     .card {
-      background: rgba(30, 41, 59, 0.9);
-      padding: 3vh 2vw;
+      background: rgba(30,41,59,0.9);
+      padding: 2vh;
       border-radius: 2vw;
       text-align: center;
-      border: 2px solid rgba(59,130,246,0.3);
-      transition: all 0.4s;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      border: 2px solid rgba(59,130,246,0.4);
+      transition: 0.4s;
     }
+    .card:hover { transform: translateY(-10px); border-color: #60a5fa; }
+    .card h3 { font-size: 2.2vw; color: #94a3b8; }
+    .card p { font-size: 6.5vw; font-weight: 900; font-family: 'Poppins', sans-serif; }
 
-    .card:hover {
-      transform: translateY(-15px) scale(1.05);
-      border-color: var(--primary);
-      box-shadow: 0 20px 50px rgba(59,130,246,0.6);
-    }
-
-    .card h3 {
-      font-size: 2.5vw;
-      color: #94a3b8;
-      margin-bottom: 1vh;
-    }
-
-    .card p {
-      font-family: 'Poppins', sans-serif;
-      font-size: 7vw;
-      font-weight: 900;
-      color: white;
-    }
-
-    /* Gráficos e tabelas grandes */
-    .chart-container, .table-container, .funnel-chart {
-      background: rgba(15, 23, 42, 0.8);
-      padding: 3vh 3vw;
+    .chart-container, .table-container, .funnel-container {
+      background: rgba(15,23,42,0.9);
       border-radius: 2vw;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.6);
+      padding: 2vh;
+      box-shadow: inset 0 0 30px rgba(0,0,0,0.6);
       border: 1px solid rgba(255,255,255,0.1);
     }
-
-    .chart-container {
-      height: 55vh;
-    }
+    .chart-container { height: 38vh; }
 
     table {
       width: 100%;
-      font-size: 2.5vw;
       border-collapse: collapse;
+      font-size: 2.5vw;
     }
+    th { background: #3b82f6; padding: 1.5vh; font-size: 2.6vw; }
+    td { padding: 1.5vh; text-align: center; }
+    .total-row td { background: #10b981; font-size: 3vw; font-weight: 900; }
 
-    th {
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      padding: 2vh;
-      font-size: 2.8vw;
-      font-weight: 800;
+    /* Funil gigante e centralizado */
+    .funnel-container {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-
-    td {
-      padding: 2vh;
-      text-align: center;
-    }
-
-    .total-row td {
-      background: linear-gradient(90deg, #10b981, #059669);
-      font-size: 3.2vw;
-      font-weight: 900;
-      color: white;
-    }
-
-    /* Funil GIGANTE para TV */
     .funnel-chart {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 2vh;
-      padding: 5vh 10vw;
-    }
-
-    .funnel-step {
+      gap: 1.5vh;
       width: 100%;
-      max-width: 90vw;
-      padding: 3vh 5vw;
-      border-radius: 3vw;
+    }
+    .funnel-step {
+      width: 85%;
+      max-width: 80vw;
+      padding: 2.5vh 4vw;
+      border-radius: 2vw;
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      font-size: 3.5vw;
       font-weight: 900;
-      font-size: 3.5vw;
       box-shadow: 0 15px 40px rgba(0,0,0,0.7);
-      transition: 0.5s;
     }
-
-    .funnel-step:hover {
-      transform: scale(1.05);
-      z-index: 10;
-    }
-
-    .funnel-step span:last-child {
-      font-size: 9vw;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    .funnel-step-1 { background: linear-gradient(135deg, #10b981, #059669); max-width: 90vw; }
-    .funnel-step-2 { background: linear-gradient(135deg, #3b82f6, #2563eb); max-width: 75vw; }
-    .funnel-step-3 { background: linear-gradient(135deg, #f97316, #ea580c); max-width: 60vw; }
-    .funnel-step-4 { background: linear-gradient(135deg, #8b5cf6, #7c3aed); max-width: 45vw; }
-    .funnel-step-5 { background: linear-gradient(135deg, #ef4444, #dc2626); max-width: 35vw; border-radius: 0 0 3vw 3vw; }
-
-    .insight {
-      font-size: 3.5vw;
-      background: rgba(59,130,246,0.2);
-      padding: 3vh 4vw;
-      border-left: 1.5vw solid var(--primary);
-      border-radius: 2vw;
-      text-align: center;
-      margin-top: 3vh;
-    }
+    .funnel-step span:last-child { font-size: 9vw; font-family: 'Poppins', sans-serif; }
+    .funnel-step-1 { background: linear-gradient(135deg, #10b981, #059669); }
+    .funnel-step-2 { background: linear-gradient(135deg, #3b82f6, #2563eb); width: 70%; }
+    .funnel-step-3 { background: linear-gradient(135deg, #f97316, #ea580c); width: 55%; }
+    .funnel-step-4 { background: linear-gradient(135deg, #8b5cf6, #7c3aed); width: 40%; }
+    .funnel-step-5 { background: linear-gradient(135deg, #ef4444, #dc2626); width: 30%; border-radius: 0 0 2vw 2vw; }
 
     footer {
       text-align: center;
-      font-size: 2.2vw;
-      padding: 2vh;
-      background: rgba(0,0,0,0.6);
+      font-size: 2.5vw;
       color: #94a3b8;
     }
   </style>
 </head>
 <body>
 
-  <div class="bg-glow"></div>
+<div class="glow"></div>
 
-  <div class="container">
-    <header>
-      <h1>WISEBID DASHBOARD</h1>
-      <p>Produção de Oportunidades • 10 a 14 de novembro de 2025</p>
-    </header>
+<div class="tv-safe">
+  <header>
+    <h1>WISEBID DASHBOARD</h1>
+    <p>10 a 14 de novembro de 2025</p>
+  </header>
 
-    <div class="tabs">
-      <div class="tab active" data-tab="tarly">Tarly</div>
-      <div class="tab" data-tab="ailton">Ailton</div>
-      <div class="tab" data-tab="izabele">Izabele</div>
-      <div class="tab" data-tab="carol">Carol</div>
-      <div class="tab" data-tab="consolidado">Consolidado</div>
-    </div>
-
-    <!-- TARLY -->
-    <div id="tarly" class="main-content" style="display: grid;">
-      <div class="left-column">
-        <h2>Tarly De Souza</h2>
-        <div class="summary">
-          <div class="card"><h3>Adicionadas</h3><p>11</p></div>
-          <div class="card"><h3>Aprov. M/F</h3><p>6</p></div>
-          <div class="card"><h3>Taxa</h3><p>75%</p></div>
-          <div class="card"><h3>Perdas</h3><p style="color:#ef4444">2</p></div>
-        </div>
-        <div class="chart-container"><canvas id="chart-tarly"></canvas></div>
-      </div>
-      <div class="right-column">
-        <div class="table-container">
-          <table>
-            <thead><tr><th>Data</th><th>Adic.</th><th>Aprov.</th><th>Perdas</th><th>Devolv.</th></tr></thead>
-            <tbody>
-              <tr><td>10/11</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-              <tr><td>11/11</td><td>5</td><td>0</td><td>2</td><td>1</td></tr>
-              <tr><td>12/11</td><td>4</td><td>2</td><td>0</td><td>1</td></tr>
-              <tr><td>13/11</td><td>2</td><td>2</td><td>0</td><td>0</td></tr>
-              <tr><td>14/11</td><td>0</td><td>2</td><td>0</td><td>0</td></tr>
-              <tr class="total-row"><td>TOTAL</td><td>11</td><td>6</td><td>2</td><td>2</td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="insight">Líder absoluto em prospecção com alta taxa de conversão!</div>
-      </div>
-    </div>
-
-    <!-- CONSOLIDADO (exemplo de tela cheia) -->
-    <div id="consolidado" class="main-content" style="display: none; justify-content: center; align-items: center;">
-      <div style="width: 100%;">
-        <h2>FUNIL COLETIVO</h2>
-        <div class="funnel-chart">
-          <div class="funnel-step funnel-step-1"><span>Adicionadas</span><span>20</span></div>
-          <div class="funnel-step funnel-step-2"><span>Aprovadas M/F</span><span>14</span></div>
-          <div class="funnel-step funnel-step-3"><span>Aprovadas Jurídica</span><span>14</span></div>
-          <div class="funnel-step funnel-step-4"><span>Validação Jurídica</span><span>11</span></div>
-          <div class="funnel-step funnel-step-5"><span>Viabilidade Total</span><span>0</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Adicione as outras abas com a mesma estrutura -->
-
-    <footer>
-      Atualizado automaticamente em 14/11/2025 • Wisebid © 2025
-    </footer>
+  <div class="tabs">
+    <div class="tab active" data-tab="tarly">Tarly</div>
+    <div class="tab" data-tab="ailton">Ailton</div>
+    <div class="tab" data-tab="izabele">Izabele</div>
+    <div class="tab" data-tab="carol">Carol</div>
+    <div class="tab" data-tab="consolidado">Consolidado</div>
   </div>
 
-  <script>
-    // Troca de abas
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.main-content').forEach(c => c.style.display = 'none');
-        tab.classList.add('active');
-        document.getElementById(tab.dataset.tab).style.display = 'grid';
-      });
-    });
+  <!-- TARLY -->
+  <div id="tarly" class="content active">
+    <div class="left">
+      <h2>Tarly De Souza</h2>
+      <div class="summary">
+        <div class="card"><h3>Adicionadas</h3><p>11</p></div>
+        <div class="card"><h3>Aprov. M/F</h3><p>6</p></div>
+        <div class="card"><h3>Taxa</h3><p>75%</p></div>
+        <div class="card"><h3>Perdas</h3><p style="color:#ef4444">2</p></div>
+      </div>
+      <div class="chart-container"><canvas id="chart-tarly"></canvas></div>
+    </div>
+    <div class="right">
+      <div class="table-container">
+        <table>
+          <thead><tr><th>Data</th><th>Adic.</th><th>Aprov.</th><th>Perdas</th><th>Devol.</th></tr></thead>
+          <tbody>
+            <tr><td>10/11</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+            <tr><td>11/11</td><td>5</td><td>0</td><td>2</td><td>1</td></tr>
+            <tr><td>12/11</td><td>4</td><td>2</td><td>0</td><td>1</td></tr>
+            <tr><td>13/11</td><td>2</td><td>2</td><td>0</td><td>0</td></tr>
+            <tr><td>14/11</td><td>0</td><td>2</td><td>0</td><td>0</td></tr>
+            <tr class="total-row"><td>TOTAL</td><td>11</td><td>6</td><td>2</td><td>2</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 
-    // Gráficos grandes e bonitos
-    const ctx = document.getElementById('chart-tarly');
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['10/11', '11/11', '12/11', '13/11', '14/11'],
-        datasets: [
-          { label: 'Adicionadas', data: [0,5,4,2,0], borderColor: '#60a5fa', backgroundColor: 'rgba(96,165,250,0.2)', tension: 0.4, fill: true },
-          { label: 'Aprovadas', data: [0,0,2,2,2], borderColor: '#34d399', backgroundColor: 'rgba(52,211,153,0.2)', tension: 0.4, fill: true }
-        ]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { labels: { font: { size: 32 } } } },
-        scales: { x: { ticks: { font: { size: 28 } } }, y: { ticks: { font: { size: 28 } } } }
-      }
+  <!-- CONSOLIDADO -->
+  <div id="consolidado" class="content">
+    <div class="funnel-container">
+      <div class="funnel-chart">
+        <div class="funnel-step funnel-step-1"><span>Adicionadas</span><span>20</span></div>
+        <div class="funnel-step funnel-step-2"><span>Aprovadas M/F</span><span>14</span></div>
+        <div class="funnel-step funnel-step-3"><span>Aprovadas Jurídica</span><span>14</span></div>
+        <div class="funnel-step funnel-step-4"><span>Validação Jurídica</span><span>11</span></div>
+        <div class="funnel-step funnel-step-5"><span>Viabilidade Total</span><span>0</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Adicione as outras abas com a mesma estrutura -->
+
+  <footer>Atualizado automaticamente • Wisebid © 2025</footer>
+</div>
+
+<script>
+  // Troca de abas
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
     });
-  </script>
+  });
+
+  // Gráfico exemplo
+  new Chart(document.getElementById('chart-tarly'), {
+    type: 'line',
+    data: {
+      labels: ['10','11','12','13','14'],
+      datasets: [
+        { label: 'Adicionadas', data: [0,5,4,2,0], borderColor: '#60a5fa', tension: 0.4, fill: true },
+        { label: 'Aprovadas', data: [0,0,2,2,2], borderColor: '#34d399', tension: 0.4, fill: true }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { labels: { font: { size: 28 } } } },
+      scales: { x: { ticks: { font: { size: 24 } } }, y: { ticks: { font: { size: 24 } } } }
+    }
+  });
+</script>
 </body>
 </html>
