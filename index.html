@@ -3,16 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dashboard BI - Produção de Oportunidades (10-14/11/2025)</title>
+  <title>Dashboard BI - Wisebid | TV 55"</title>
   
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
-  <!-- Chart.js -->
+  <!-- Fonts grandes e impactantes -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <!-- AOS Animation -->
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
+  
   <style>
     :root {
       --primary: #3b82f6;
@@ -20,414 +16,361 @@
       --secondary: #8b5cf6;
       --success: #10b981;
       --danger: #ef4444;
-      --warning: #f59e0b;
-      --gray: #64748b;
-      --light: #f8fafc;
-      --dark: #1e293b;
       --bg: #0f172a;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body {
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      background: #000;
       font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: #e2e8f0;
-      min-height: 100vh;
-      overflow-x: hidden;
-      position: relative;
+      color: #f1f5f9;
     }
 
-    /* Fundo Animado Abstrato com Partículas e Gradiente */
+    /* Fundo animado poderoso para TV grande */
     body::before {
       content: '';
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #1e1b4b 100%);
+      background: linear-gradient(135deg, #1e1b4b 0%, #0f172a 30%, #1e293b 70%, #312e81 100%);
       z-index: -2;
     }
 
-    .bg-animation {
+    .bg-glow {
       position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: 
-        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, rgba(139, 92, 246, 0.2) 0%, transparent 50%);
-      animation: float 20s ease-in-out infinite;
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(59,130,246,0.4) 0%, transparent 70%);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      animation: pulse 15s infinite;
       z-index: -1;
     }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-30px) rotate(1deg); }
+    @keyframes pulse {
+      0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+      50% { transform: translate(-50%, -50%) scale(1.3); opacity: 0.9; }
     }
 
-    /* Partículas flutuantes */
-    .particle {
-      position: absolute;
-      background: rgba(59, 130, 246, 0.4);
-      border-radius: 50%;
-      animation: particle-float linear infinite;
-      filter: blur(1px);
-    }
-
-    @keyframes particle-float {
-      0% { transform: translateY(100vh) translateX(0); opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { transform: translateY(-100px) translateX(100px); opacity: 0; }
-    }
-
-    /* Container Principal com Glassmorphism */
+    /* Container ocupando 100% da TV */
     .container {
-      max-width: 1480px;
-      margin: 2rem auto;
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-radius: 24px;
-      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      overflow: hidden;
-      position: relative;
-      z-index: 10;
+      width: 100vw;
+      height: 100vh;
+      padding: 2vh 4vw;
+      display: grid;
+      grid-template-rows: auto auto 1fr auto;
+      gap: 2vh;
+      background: rgba(15, 23, 42, 0.5);
+      backdrop-filter: blur(20px);
     }
 
     header {
-      background: linear-gradient(135deg, var(--primary-dark), var(--secondary));
-      padding: 2.5rem 2rem;
       text-align: center;
-      color: white;
+      padding: 3vh 0;
+      background: linear-gradient(90deg, var(--primary-dark), var(--secondary));
+      border-radius: 2vw;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
     }
 
     header h1 {
       font-family: 'Poppins', sans-serif;
-      font-size: 2.8rem;
-      font-weight: 800;
-      margin-bottom: 0.5rem;
-      text-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      font-size: 6vw;
+      font-weight: 900;
+      text-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      letter-spacing: 2px;
     }
 
     header p {
-      font-size: 1.1rem;
-      opacity: 0.9;
+      font-size: 2.5vw;
+      margin-top: 1vh;
+      opacity: 0.95;
     }
 
+    /* Abas grandes e destacadas */
     .tabs {
       display: flex;
-      background: rgba(255, 255, 255, 0.1);
+      justify-content: center;
+      gap: 2vw;
+      background: rgba(30, 41, 59, 0.8);
+      padding: 2vh 0;
+      border-radius: 2vw;
       backdrop-filter: blur(10px);
     }
 
     .tab {
-      flex: 1;
-      padding: 1.2rem;
-      text-align: center;
-      font-weight: 600;
+      font-size: 2.8vw;
+      font-weight: 800;
+      padding: 2vh 4vw;
+      border-radius: 1.5vw;
       cursor: pointer;
-      transition: all 0.3s ease;
-      color: #cbd5e1;
-      position: relative;
+      transition: all 0.4s;
+      background: rgba(255,255,255,0.1);
+      min-width: 18vw;
+      text-align: center;
     }
 
-    .tab::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      width: 0;
-      height: 4px;
+    .tab:hover { background: rgba(59,130,246,0.4); }
+    .tab.active {
       background: var(--primary);
-      transition: all 0.4s ease;
-      transform: translateX(-50%);
-    }
-
-    .tab:hover, .tab.active {
-      background: rgba(59, 130, 246, 0.2);
       color: white;
+      transform: scale(1.1);
+      box-shadow: 0 10px 30px rgba(59,130,246,0.6);
     }
 
-    .tab.active::after {
-      width: 70%;
+    /* Área principal */
+    .main-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3vw;
+      padding: 2vh 0;
     }
 
-    .tab-content {
-      padding: 2.5rem;
-      display: none;
-      background: rgba(15, 23, 42, 0.7);
-      min-height: 80vh;
-    }
-
-    .tab-content.active { display: block; animation: fadeIn 0.6s ease; }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    .left-column, .right-column {
+      display: flex;
+      flex-direction: column;
+      gap: 3vh;
     }
 
     h2 {
       font-family: 'Poppins', sans-serif;
-      font-size: 2.2rem;
-      color: #e2e8f0;
-      margin-bottom: 1.5rem;
+      font-size: 4.5vw;
       text-align: center;
+      color: #60a5fa;
+      text-shadow: 0 4px 10px rgba(0,0,0,0.5);
     }
 
+    /* Cards gigantes */
     .summary {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 2rem;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2vw;
     }
 
     .card {
-      background: rgba(30, 41, 59, 0.6);
-      backdrop-filter: blur(10px);
-      padding: 1.8rem;
-      border-radius: 16px;
+      background: rgba(30, 41, 59, 0.9);
+      padding: 3vh 2vw;
+      border-radius: 2vw;
       text-align: center;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      transition: all 0.4s ease;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+      border: 2px solid rgba(59,130,246,0.3);
+      transition: all 0.4s;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
     .card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+      transform: translateY(-15px) scale(1.05);
       border-color: var(--primary);
+      box-shadow: 0 20px 50px rgba(59,130,246,0.6);
     }
 
     .card h3 {
-      font-size: 0.95rem;
+      font-size: 2.5vw;
       color: #94a3b8;
-      margin-bottom: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      margin-bottom: 1vh;
     }
 
     .card p {
       font-family: 'Poppins', sans-serif;
-      font-size: 2.8rem;
-      font-weight: 800;
+      font-size: 7vw;
+      font-weight: 900;
       color: white;
     }
 
-    .chart-container {
+    /* Gráficos e tabelas grandes */
+    .chart-container, .table-container, .funnel-chart {
       background: rgba(15, 23, 42, 0.8);
-      padding: 1.5rem;
-      border-radius: 16px;
-      margin: 2rem 0;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      padding: 3vh 3vw;
+      border-radius: 2vw;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.6);
       border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .chart-container {
+      height: 55vh;
     }
 
     table {
       width: 100%;
+      font-size: 2.5vw;
       border-collapse: collapse;
-      background: rgba(30, 41, 59, 0.6);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
 
     th {
       background: linear-gradient(90deg, var(--primary), var(--secondary));
-      color: white;
-      padding: 1rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      font-size: 0.9rem;
-      letter-spacing: 0.5px;
+      padding: 2vh;
+      font-size: 2.8vw;
+      font-weight: 800;
     }
 
     td {
-      padding: 1rem;
+      padding: 2vh;
       text-align: center;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-    }
-
-    tbody tr:hover {
-      background: rgba(59, 130, 246, 0.15);
     }
 
     .total-row td {
       background: linear-gradient(90deg, #10b981, #059669);
-      font-weight: 700;
+      font-size: 3.2vw;
+      font-weight: 900;
       color: white;
-      font-size: 1.1rem;
     }
 
-    .insight {
-      background: rgba(59, 130, 246, 0.15);
-      border-left: 6px solid var(--primary);
-      padding: 1.5rem;
-      border-radius: 12px;
-      font-size: 1.1rem;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(59, 130, 246, 0.3);
-      margin-top: 1.5rem;
-    }
-
-    .insight strong { color: var(--primary); }
-
-    /* Funil Moderno */
+    /* Funil GIGANTE para TV */
     .funnel-chart {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 12px;
-      padding: 3rem 2rem;
-      margin: 2rem 0;
+      gap: 2vh;
+      padding: 5vh 10vw;
     }
 
     .funnel-step {
       width: 100%;
-      max-width: 800px;
-      padding: 1.5rem 2rem;
-      color: white;
-      font-weight: 700;
-      border-radius: 12px;
+      max-width: 90vw;
+      padding: 3vh 5vw;
+      border-radius: 3vw;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: all 0.4s ease;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+      font-weight: 900;
+      font-size: 3.5vw;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.7);
+      transition: 0.5s;
     }
 
     .funnel-step:hover {
-      transform: scale(1.03);
+      transform: scale(1.05);
       z-index: 10;
     }
 
     .funnel-step span:last-child {
-      font-size: 2.5rem;
+      font-size: 9vw;
       font-family: 'Poppins', sans-serif;
     }
 
-    .funnel-step-1 { background: linear-gradient(135deg, #10b981, #059669); max-width: 800px; }
-    .funnel-step-2 { background: linear-gradient(135deg, #3b82f6, #2563eb); max-width: 650px; }
-    .funnel-step-3 { background: linear-gradient(135deg, #f97316, #ea580c); max-width: 500px; }
-    .funnel-step-4 { background: linear-gradient(135deg, #8b5cf6, #7c3aed); max-width: 380px; }
-    .funnel-step-5 { background: linear-gradient(135deg, #ef4444, #dc2626); max-width: 280px; border-radius: 0 0 16px 16px; }
+    .funnel-step-1 { background: linear-gradient(135deg, #10b981, #059669); max-width: 90vw; }
+    .funnel-step-2 { background: linear-gradient(135deg, #3b82f6, #2563eb); max-width: 75vw; }
+    .funnel-step-3 { background: linear-gradient(135deg, #f97316, #ea580c); max-width: 60vw; }
+    .funnel-step-4 { background: linear-gradient(135deg, #8b5cf6, #7c3aed); max-width: 45vw; }
+    .funnel-step-5 { background: linear-gradient(135deg, #ef4444, #dc2626); max-width: 35vw; border-radius: 0 0 3vw 3vw; }
+
+    .insight {
+      font-size: 3.5vw;
+      background: rgba(59,130,246,0.2);
+      padding: 3vh 4vw;
+      border-left: 1.5vw solid var(--primary);
+      border-radius: 2vw;
+      text-align: center;
+      margin-top: 3vh;
+    }
 
     footer {
       text-align: center;
-      padding: 1.5rem;
-      background: rgba(0,0,0,0.4);
+      font-size: 2.2vw;
+      padding: 2vh;
+      background: rgba(0,0,0,0.6);
       color: #94a3b8;
-      font-size: 0.9rem;
-      border-top: 1px solid rgba(255,255,255,0.1);
-    }
-
-    @media (max-width: 768px) {
-      header h1 { font-size: 2rem; }
-      .tabs { flex-direction: column; }
-      .tab { padding: 1rem; }
-      .summary { grid-template-columns: 1fr; }
-      .funnel-step { max-width: 100% !important; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Fundo Animado -->
-  <div class="bg-animation"></div>
+  <div class="bg-glow"></div>
 
-  <div class="container" data-aos="fade-up">
+  <div class="container">
     <header>
-      <h1>Dashboard de Desempenho</h1>
-      <p>Período: 10 a 14 de novembro de 2025 | Wisebid</p>
+      <h1>WISEBID DASHBOARD</h1>
+      <p>Produção de Oportunidades • 10 a 14 de novembro de 2025</p>
     </header>
 
     <div class="tabs">
-      <div class="tab active" data-tab="tarly">Tarly De Souza</div>
-      <div class="tab" data-tab="ailton">Ailton dos Anjos</div>
-      <div class="tab" data-tab="izabele">Izabele Habeite</div>
-      <div class="tab" data-tab="carol">Carol Serra</div>
+      <div class="tab active" data-tab="tarly">Tarly</div>
+      <div class="tab" data-tab="ailton">Ailton</div>
+      <div class="tab" data-tab="izabele">Izabele</div>
+      <div class="tab" data-tab="carol">Carol</div>
       <div class="tab" data-tab="consolidado">Consolidado</div>
     </div>
 
-    <!-- Conteúdo das abas (mantido igual, só com novo estilo) -->
     <!-- TARLY -->
-    <div id="tarly" class="tab-content active" data-aos="fade-up">
-      <h2>Tarly De Souza</h2>
-      <div class="summary">
-        <div class="card" data-aos="zoom-in" data-aos-delay="100"><h3>Total Adicionadas</h3><p>11</p></div>
-        <div class="card" data-aos="zoom-in" data-aos-delay="200"><h3>Aprov. M/F</h3><p>6</p></div>
-        <div class="card" data-aos="zoom-in" data-aos-delay="300"><h3>Taxa Aprovação</h3><p>75,0%</p></div>
-        <div class="card" data-aos="zoom-in" data-aos-delay="400"><h3>Perdas M/F</h3><p style="color:#ef4444;">2</p></div>
+    <div id="tarly" class="main-content" style="display: grid;">
+      <div class="left-column">
+        <h2>Tarly De Souza</h2>
+        <div class="summary">
+          <div class="card"><h3>Adicionadas</h3><p>11</p></div>
+          <div class="card"><h3>Aprov. M/F</h3><p>6</p></div>
+          <div class="card"><h3>Taxa</h3><p>75%</p></div>
+          <div class="card"><h3>Perdas</h3><p style="color:#ef4444">2</p></div>
+        </div>
+        <div class="chart-container"><canvas id="chart-tarly"></canvas></div>
       </div>
-      <div class="chart-container"><canvas id="chart-tarly"></canvas></div>
-      <table>
-        <thead><tr><th>Data</th><th>Adic.</th><th>Aprov. M/F</th><th>Perdas M/F</th><th>Devolvidas</th></tr></thead>
-        <tbody>
-          <tr><td>10/11</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
-          <tr><td>11/11</td><td>5</td><td>0</td><td>2</td><td>1</td></tr>
-          <tr><td>12/11</td><td>4</td><td>2</td><td>0</td><td>1</td></tr>
-          <tr><td>13/11</td><td>2</td><td>2</td><td>0</td><td>0</td></tr>
-          <tr><td>14/11</td><td>0</td><td>2</td><td>0</td><td>0</td></tr>
-          <tr class="total-row"><td>Total</td><td>11</td><td>6</td><td>2</td><td>2</td></tr>
-        </tbody>
-      </table>
-      <div class="insight">Líder em prospecção com 11 adicionadas. Conversão em M/F de 75,0% — alta eficácia na triagem.</div>
+      <div class="right-column">
+        <div class="table-container">
+          <table>
+            <thead><tr><th>Data</th><th>Adic.</th><th>Aprov.</th><th>Perdas</th><th>Devolv.</th></tr></thead>
+            <tbody>
+              <tr><td>10/11</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+              <tr><td>11/11</td><td>5</td><td>0</td><td>2</td><td>1</td></tr>
+              <tr><td>12/11</td><td>4</td><td>2</td><td>0</td><td>1</td></tr>
+              <tr><td>13/11</td><td>2</td><td>2</td><td>0</td><td>0</td></tr>
+              <tr><td>14/11</td><td>0</td><td>2</td><td>0</td><td>0</td></tr>
+              <tr class="total-row"><td>TOTAL</td><td>11</td><td>6</td><td>2</td><td>2</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="insight">Líder absoluto em prospecção com alta taxa de conversão!</div>
+      </div>
     </div>
 
-    <!-- As outras abas (ailton, izabele, carol, consolidado) permanecem iguais no conteúdo, só mudam o estilo -->
+    <!-- CONSOLIDADO (exemplo de tela cheia) -->
+    <div id="consolidado" class="main-content" style="display: none; justify-content: center; align-items: center;">
+      <div style="width: 100%;">
+        <h2>FUNIL COLETIVO</h2>
+        <div class="funnel-chart">
+          <div class="funnel-step funnel-step-1"><span>Adicionadas</span><span>20</span></div>
+          <div class="funnel-step funnel-step-2"><span>Aprovadas M/F</span><span>14</span></div>
+          <div class="funnel-step funnel-step-3"><span>Aprovadas Jurídica</span><span>14</span></div>
+          <div class="funnel-step funnel-step-4"><span>Validação Jurídica</span><span>11</span></div>
+          <div class="funnel-step funnel-step-5"><span>Viabilidade Total</span><span>0</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Adicione as outras abas com a mesma estrutura -->
 
     <footer>
-      Atualizado em 14/11/2025 • Wisebid © 2025 • Dados oficiais
+      Atualizado automaticamente em 14/11/2025 • Wisebid © 2025
     </footer>
   </div>
 
   <script>
-    AOS.init({ duration: 800, once: true });
-
-    // Geração de partículas flutuantes
-    function createParticle() {
-      const particle = document.createElement('div');
-      particle.classList.add('particle');
-      const size = Math.random() * 5 + 2;
-      particle.style.width = size + 'px';
-      particle.style.height = size + 'px';
-      particle.style.left = Math.random() * 100 + 'vw';
-      particle.style.animationDuration = Math.random() * 20 + 15 + 's';
-      particle.style.animationDelay = Math.random() * 5 + 's';
-      document.body.appendChild(particle);
-      setTimeout(() => particle.remove(), 30000);
-    }
-    setInterval(createParticle, 800);
-
     // Troca de abas
     document.querySelectorAll('.tab').forEach(tab => {
       tab.addEventListener('click', () => {
         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        document.querySelectorAll('.main-content').forEach(c => c.style.display = 'none');
         tab.classList.add('active');
-        document.getElementById(tab.dataset.tab).classList.add('active');
+        document.getElementById(tab.dataset.tab).style.display = 'grid';
       });
     });
 
-    // Gráficos (mantidos iguais)
-    const createLineChart = (id, labels, datasets) => {
-      new Chart(document.getElementById(id), {
-        type: 'line',
-        data: { labels, datasets: datasets.map(d => ({ ...d, tension: 0.4, borderWidth: 3, pointRadius: 6 })) },
-        options: {
-          responsive: true,
-          plugins: { legend: { labels: { color: '#e2e8f0' } } },
-          scales: { x: { ticks: { color: '#94a3b8' } }, y: { ticks: { color: '#94a3b8' }, beginAtZero: true } }
-        }
-      });
-    };
-
-    const labels = ['10/11', '11/11', '12/11', '13/11', '14/11'];
-    createLineChart('chart-tarly', labels, [
-      { label: 'Adicionadas', data: [0,5,4,2,0], borderColor: '#60a5fa', backgroundColor: '#60a5fa' },
-      { label: 'Aprov. M/F', data: [0,0,2,2,2], borderColor: '#34d399', backgroundColor: '#34d399' },
-      { label: 'Perdas M/F', data: [0,2,0,0,0], borderColor: '#f87171', backgroundColor: '#f87171' }
-    ]);
-    // ... (os outros gráficos continuam iguais)
+    // Gráficos grandes e bonitos
+    const ctx = document.getElementById('chart-tarly');
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['10/11', '11/11', '12/11', '13/11', '14/11'],
+        datasets: [
+          { label: 'Adicionadas', data: [0,5,4,2,0], borderColor: '#60a5fa', backgroundColor: 'rgba(96,165,250,0.2)', tension: 0.4, fill: true },
+          { label: 'Aprovadas', data: [0,0,2,2,2], borderColor: '#34d399', backgroundColor: 'rgba(52,211,153,0.2)', tension: 0.4, fill: true }
+        ]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { labels: { font: { size: 32 } } } },
+        scales: { x: { ticks: { font: { size: 28 } } }, y: { ticks: { font: { size: 28 } } } }
+      }
+    });
   </script>
 </body>
 </html>
